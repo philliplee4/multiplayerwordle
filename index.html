@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>WordleBUTBETTER</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- Homepage -->
+    <div id="homescreen" style="display: none;">
+        <!-- <h1 id=title>Multiplayer Wordle But Better</h1> -->
+        <img src="wordlebutbetter.png" >
+        <div class=btns>
+            <button id="comepetiveMode">Comeptitive Mode</button>
+            <button id="customMode">Custom 1v1</button>
+        </div>
+    </div>
+
+    <!-- Room setup screen -->
+    <div id="roomSetupScreen" style="display: none;">
+        <h1>Room Setup</h1>
+        <hr>
+        <div class="room-setup">
+            <span>Name:</span>
+            <input type="text" id="playerNameInput" placeholder="Enter your name" maxlength="20">
+            <span>Room Code:</span>
+            <input type="text" id="roomCodeInput" placeholder="Room Code (optional)" maxlength="6">
+            <button id="createRoomConfirm"> Create Room</button>
+            <button id="joinRoomConfirm">Join Room</button>
+            <button id="backToHomeFromRoom">Back</button>
+        </div>
+    </div>
+
+    <!-- Waiting Room -->
+
+    <div id="waitingRoomScreen" style="display: block;">
+        <h1>Waiting Room</h1>
+        <div class="room-info">
+            <p class="room-code">Room Code: <span id="currentRoomCode">ABC123</span> </p>
+            <div class="players-list">
+                <div class="player-slot" id="player1Slot">
+                    <span class="player-name">Player 1</span>
+                    <span class="player-name">DevanFishHd</span>
+                    <span class="player-status">Ready</span>
+                </div>
+
+                <div class="player-slot" id="player2Slot">
+                    <span class="player-name">Player 2</span>
+                    <span class="player-name">Waiting...</span>
+                    <span class="player-status">Joining</span>
+                </div>
+            </div>
+
+            <div class="room-buttons">
+                <button id="startGameBtn" style="display:block;">Start Game</button>
+                <button id="leaveRoomBtn">Leave Room</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- multiplayerGameScreen -->
+
+    <div id="multiplayerGameScreen" style="display: none;">
+        <h1>This is the multiplayer screen</h1>
+
+        <div class="game-container">
+            <div class="header">
+                <div class="round-info">Round ?/5</div>
+                <div class="match-score">Player 1: 0 wins | Player 2: 0 wins</div>
+            </div>
+
+            <!-- main game screen -->
+            <div class="main-game">
+                <!-- Player 1 sidebar -->
+                <div class="player-sidebar active">
+                    <div class="player-info">
+                        <div class="player-avatar">🔥</div>
+                        <div class="player-name">JaidenAnimations</div>
+                    </div>
+
+                    <div class="player-stats">
+                        <div class="stat"><span>💰</span><span class="stat-value gold">0G</span></div>
+                        <div class="stat"><span>⏱️</span><span class="stat-value timer">60s</span></div>
+                        <div class="stat"><span>🎯</span><span class="stat-value">0/6</span></div>
+                    </div>
+
+                    <div class="powerups-section">
+                        <div class="powerups-title">🛡️ Powerups</div>
+                        <div class="powerups">
+                            <div class="powerup">
+                                <div class="powerup-name">🔍 Peek</div>
+                                <div class="powerup-cost">50G</div>
+                            </div>
+                            <div class="powerup">
+                                <div class="powerup-name">❄️ Freeze</div>
+                                <div class="powerup-cost">75G</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- Close Player 1 sidebar -->
+
+                <!-- Central game board -->
+                <div class="central-board">
+                    <div class="board-header">
+                        <div class="turn-indicator">JaidenAnimation's Turn</div>
+                        <div class="word-info">5-letter word | Turn timer: 60s</div>
+                    </div>
+
+                    <!-- Guessing Grid -->
+                    <section class="guess-area">
+                        <div id="mp-Grid" class="guessGrid" role="grid" aria-label="Shared Guess Grid"></div>
+                    </section>
+
+                    <!-- Keyboard -->
+                    <section class="keyboard-area">
+                        <div class="keyboardRow" id="kb1"></div>
+                        <div class="keyboardRow" id="kb2"></div>
+                        <div class="keyboardRow" id="kb3"></div>
+                    </section>
+                </div>
+
+                <!-- Player 2 sidebar -->
+                <div class="player-sidebar player2">
+                    <div class="player-info">
+                        <div class="player-avatar">😏</div>
+                        <div class="player-name">DevanFishHD Player 2</div>
+                    </div>
+
+                    <div class="player-stats">
+                        <div class="stat"><span>💰</span><span class="stat-value gold">0G</span></div>
+                        <div class="stat"><span>⏱️</span><span class="stat-value">Waiting</span></div>
+                        <div class="stat"><span>🎯</span><span class="stat-value">0/6</span></div>
+                    </div>
+
+                    <div class="powerups-section">
+                        <div class="powerups-title">🛡️ Opponent Info</div>
+                        <div class="opponent-powerup-info">
+                            <div class="powerup-mystery"><span>🎒 Powerups: ?</span></div>
+                            <div class="powerup-mystery"><span>⚔️ Offensive: ?</span></div>
+                            <div class="powerup-mystery"><span>🛡️ Defensive: ?</span></div>
+                        </div>
+                    </div>
+
+                    <div class="waiting-message">waiting for player 1's move...</div>
+                </div> <!-- Close Player 2 sidebar -->
+
+            </div> <!-- Close main-game -->
+        </div> <!-- Close game-container -->
+    </div> <!-- Close multiplayerGameScreen -->
+
+
+    <!-- Incorrect popup -->
+    <div id = incorrectPopup class="incorrectpopup-container" style="display:none;"> 
+      Dumbass hoe
+    </div>
+
+    <!-- Shop screen -->
+
+    <div id = "itemShopScreen">
+
+
+    </div>
+
+    <div id = gameFinishScreen>
+
+
+    </div>
+
+
+
+    <script type="module" src="js/gameLogic.js"></script>
+    <script type="module" src="js/multiplayer.js"></script>
+    <script type="module" src="js/navigation.js"></script>
+
+</body>
+
+</htmL>
