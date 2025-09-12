@@ -33,7 +33,6 @@ async function handleNewGame(){
 
 document.addEventListener('DOMContentLoaded', ()=> {
     
-    showScreen('multiplayerGameScreen');
 
     //homepage
     const competitiveBtn = document.getElementById('comepetiveMode');
@@ -77,5 +76,6 @@ document.addEventListener('DOMContentLoaded', ()=> {
     if(leaveRoomBtn){
         leaveRoomBtn.addEventListener('click', ()=> showScreen('roomSetupScreen'));
     }
+
 
 });
