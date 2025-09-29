@@ -22,15 +22,29 @@ export function createGameGrid(gridId) {
     }
 
     guessGrid.innerHTML = '';
+
     for(let row = 0;row<6;row++){
+        const guessRow = document.createElement('div');
+        guessRow.classList.add('guessRow');
+
+/* 
+        //add player indicators
+        const playerIndicator = document.createElement('div');
+        playerIndicator.classList.add('player-indicator');
+        playerIndicator.setAttribute('data-row', row);
+        guess.appendChild(playerIndicator);
+ */
+
         for(let column=0;column<5;column++){
-            const square = document.createElement('div');
-            square.classList.add('square');
-            guessGrid.appendChild(square);
+            const letterBox = document.createElement('div');
+            letterBox.classList.add('letter-box');
+            guessRow.appendChild(letterBox);
         }
+
+        guessGrid.appendChild(guessRow);
     }
 
-    return document.querySelectorAll(`#${gridId} .square`);
+    return document.querySelectorAll(`#${gridId} .letter-box`);
 }
 
 export function createGameKeyboard(kb1, kb2, kb3, handleInputCallback){
@@ -53,7 +67,7 @@ export function createGameKeyboard(kb1, kb2, kb3, handleInputCallback){
 
     row1.forEach(letter => {
         const key = document.createElement('button');
-        key.classList.add('key');
+        key.classList.add('key-button', 'letter-key');
         key.textContent = letter;
         key.addEventListener('click', () => handleInputCallback(letter))
         keyboardOne.appendChild(key);
@@ -61,7 +75,7 @@ export function createGameKeyboard(kb1, kb2, kb3, handleInputCallback){
 
     row2.forEach(letter => {
         const key = document.createElement('button');
-        key.classList.add('key');
+        key.classList.add('key-button','letter-key');
         key.textContent = letter;
         key.addEventListener('click', () => handleInputCallback(letter))
         keyboardTwo.appendChild(key);
@@ -71,14 +85,52 @@ export function createGameKeyboard(kb1, kb2, kb3, handleInputCallback){
         const key = document.createElement('button');
         key.textContent = letter;
         if(letter === "Enter" || letter === "⌫") {
-            key.classList.add('wideKey');
+            key.classList.add('key-button','wide-key');
         } else {
-            key.classList.add('key');
+            key.classList.add('key-button','letter-key');
         }
        
         key.addEventListener('click', () => handleInputCallback(letter))
         keyboardThree.appendChild(key);
     });
+}
+
+export async function validGuess(guess, targetWord, rowNumber, squares){
+  //ensures word is a valid word, not if guess is correct
+  const isValid = await testWord(guess);
+
+  if(!isValid){
+    return{
+      valid: false,
+      isCorrect: false
+    };
+  }
+
+  colorFeedback(guess, targetWord, rowNumber, squares);
+
+  //checks if word is the correct wordle 
+  const isCorrect = guess.toUpperCase() === targetWord.toUpperCase();
+  return { valid: true, isCorrect };
+
+}
+
+export function displayCurrentGuess(guess, row, squares){
+
+    for(let i = 0; i< 5; i++){
+        const square = getSquare(row, i, squares);
+        if(square){
+            square.textContent = '';
+            square.classList.remove('filled');
+        }
+    }
+
+    for(let i = 0; i< guess.length; i++){
+        const square = getSquare(row, i, squares);
+        if(square){
+            square.textContent = guess[i];
+            square.classList.add('filled');
+        }
+    }
 }
 
 //Helper functions
@@ -113,7 +165,7 @@ export function clearGameBoard(squares) {
     if(!squares) return;
     squares.forEach(square => {
         square.textContent = "";
-        square.className = "square";
+        square.className = "letter-box";
     });
 }
 
@@ -124,6 +176,7 @@ export function clearKeyboard(kb1, kb2, kb3){
             const keys = keyboardRow.querySelectorAll('button');
             keys.forEach(key => {
                 key.classList.remove('correct', 'present','absent');
+                /* Maybe change later to "normal" format */
                 key.className = key.textContent === "Enter" || key.textContent === "⌫" ? "wideKey" : "key";
             });
         }
@@ -214,6 +267,6 @@ export function showInvalidWordPopup(message = "Invalid word") {
   if (popup) {
     popup.textContent = message;
     popup.classList.add('show');
-    setTimeout(() => popup.classList.remove('show'), 1500);
+    setTimeout(() => popup.classList.remove('show'), 1000);
   }
 }
