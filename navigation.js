@@ -77,5 +77,12 @@ document.addEventListener('DOMContentLoaded', ()=> {
         leaveRoomBtn.addEventListener('click', ()=> showScreen('roomSetupScreen'));
     }
 
+    // when you switch to the multiplayer screen:
+    document.getElementById('multiplayerGameScreen').style.display = 'block';
+    initializeMultiplayerGame();
+
+
+
 
 });
+
