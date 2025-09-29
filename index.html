@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>WordleBUTBETTER</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="stylescopy.css" />
 </head>
 
 <body>
@@ -15,7 +15,7 @@
         <!-- <h1 id=title>Multiplayer Wordle But Better</h1> -->
         <img src="wordlebutbetter.png" >
         <div class=btns>
-            <button id="comepetiveMode">Comeptitive Mode</button>
+            <button id="competiveMode">Competitive Mode</button>
             <button id="customMode">Custom 1v1</button>
         </div>
     </div>
@@ -38,19 +38,42 @@
     <!-- Waiting Room -->
 
     <div id="waitingRoomScreen" style="display: none;">
-        <h1>Waiting Room</h1>
-        <div class="room-info">
-            <p class="room-code">Room Code: <span id="currentRoomCode">ABC123</span> </p>
+
+
+            <div class="waitingRoom-header">
+                <h1>Waiting Room</h1>
+
+                <div class="room-info-header">
+                    <div class="room-code">
+                        Room Code: <span id="currentRoomCode">ABC123</span> 
+                    </div>
+
+                    <div class="player-count">
+                        Players: <span id="playerCount"> 1/2</span>
+                    </div>
+                </div >
+                
+            </div>
+
+
+
+
+
+
+
+
             <div class="players-list">
                 <div class="player-slot" id="player1Slot">
-                    <span class="player-name">Player 1</span>
+                    <span class="player-label">Player 1</span>
                     <span class="player-name">DevanFishHd</span>
+                    <span class="player-avatar"> 😊</span>
                     <span class="player-status">Ready</span>
                 </div>
 
                 <div class="player-slot" id="player2Slot">
-                    <span class="player-name">Player 2</span>
+                    <span class="player-label">Player 2</span>
                     <span class="player-name">Waiting...</span>
+                    <span class=" player-avatar"> ❓ </span>
                     <span class="player-status">Joining</span>
                 </div>
             </div>
@@ -59,7 +82,7 @@
                 <button id="startGameBtn" style="display:block;">Start Game</button>
                 <button id="leaveRoomBtn">Leave Room</button>
             </div>
-        </div>
+        
     </div>
 
     <!-- multiplayerGameScreen -->
@@ -150,13 +173,13 @@
 
             </div> <!-- Close main-game -->
         </div> <!-- Close game-container -->
+            <!-- Incorrect popup -->
+        <div id="incorrectPopup" class="incorrectpopup-container"> 
+            Invalid word
+        </div>
     </div> <!-- Close multiplayerGameScreen -->
 
 
-    <!-- Incorrect popup -->
-    <div id = incorrectPopup class="incorrectpopup-container" style="display:none;"> 
-      Dumbass hoe
-    </div>
 
     <!-- Shop screen -->
 
@@ -172,12 +195,10 @@
 
 
 
-    <script type="module" src="gameLogic.js"></script>
-    <script type="module" src="multiplayer.js"></script>
-    <script type="module" src="navigation.js"></script>
+    <script type="module" src="js/gameLogic.js"></script>
+    <script type="module" src="js/multiplayer.js"></script>
+    <script type="module" src="js/navigation.js"></script>
 
 </body>
 
-
 </htmL>
-
