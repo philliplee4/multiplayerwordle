@@ -1,0 +1,19 @@
+{
+  "easy": [
+    "HOUSE", "BREAD", "WATER", "HAPPY", "SMILE", "HEART", "LIGHT", "WORLD", "MUSIC", "PARTY",
+    "BEACH", "SWEET", "PHONE", "MONEY", "PEACE", "DREAM", "LAUGH", "DANCE", "SUNNY", "CLOUD",
+    "PLANT", "TIGER", "OCEAN", "RIVER", "STONE", "APPLE", "LEMON", "GRAPE", "PEACH", "MELON",
+    "CHAIR", "TABLE", "PAPER", "GLASS", "METAL", "CLOCK", "FLAME", "STORM", "FROST", "RAINY"
+  ],
+  "medium": [
+    "ABOUT", "THINK", "WOULD", "COULD", "THEIR", "THERE", "WHICH", "FIRST", "AFTER", "YEARS",
+    "POINT", "FOUND", "NEVER", "RIGHT", "MIGHT", "SMALL", "LARGE", "YOUNG", "EARLY", "LATER",
+    "CHOSE", "BUILT", "BEGAN", "THREW", "SPOKE", "CLAIM", "PROVE", "DOUBT", "GHOST", "SHELF",
+    "CRAFT", "CHESS", "FORUM", "PIXEL", "DELTA", "ALPHA", "BRAVO", "CHAOS", "KARMA", "LUNAR"
+  ],
+  "hard": [
+    "AXIOM", "WALTZ", "YACHT", "QUIRK", "FJORD", "GLYPH", "LYMPH", "NYMPH", "PSYCH", "CRYPT",
+    "TRYST", "QUALM", "EPOXY", "IVORY", "JAZZY", "DIZZY", "FUZZY", "PROXY", "OXIDE", "VEXED",
+    "BLITZ", "FRANZ", "SQUAB", "QUASH", "SWAMP", "DWARF", "THUMP", "FLUNG", "PLUMB", "CRAMP"
+  ]
+}
