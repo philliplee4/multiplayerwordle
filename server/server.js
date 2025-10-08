@@ -34,7 +34,10 @@ io.on('connection', (socket) => {
 
         rooms[roomCode] = {
             players: [{ id: socket.id, name: data.playerName }],
-            host: socket.id 
+            host: socket.id,
+            scores: [0, 0],
+            currentRound: 0,
+            maxRounds: 5
         };
 
         socket.join(roomCode);
@@ -96,9 +99,14 @@ io.on('connection', (socket) => {
                 return;
             }
 
+
             room.targetWord = getRandomWord('medium');
             room.currentTurn = Math.floor(Math.random() * 2);
             room.currentRow = 0;
+            room.turnTimer = null;       
+            room.turnDuration = 30000;   
+
+            startNewRound(roomCode);
 
             console.log(`Starting game in room ${roomCode} with word: ${room.targetWord}`);
 
@@ -109,6 +117,8 @@ io.on('connection', (socket) => {
                 targetWord: room.targetWord,
                 currentTurn: room.currentTurn
             });
+
+            startTurnTimer(roomCode);
         } else {
             console.log('No room found');
         }
@@ -161,6 +171,12 @@ io.on('connection', (socket) => {
             return;
         }
 
+
+        if(room.turnTimer) {
+            clearTimeout(room.turnTimer);
+            room.turnTimer = null;
+        }
+
         //check if correct
         const targetWord = room.targetWord;
         const isCorrect = (guess === targetWord);
@@ -180,6 +196,34 @@ io.on('connection', (socket) => {
             playerName: playerName,
             currentTurn: room.currentTurn
         });
+
+        if(isCorrect){
+            room.scores[playerIndex]++; //increase winner's score
+
+            io.to(roomCode).emit('roundEnded', { 
+                winner: playerName,
+                scores: room.scores,
+                reason: 'correct'
+            });
+
+            setTimeout(() => startNewRound(roomCode), 3000);
+        } else if(room.currentRow >= 6){
+            io.to(roomCode).emit('roundEnded', {
+                winner: null,
+                scores: room.scores,
+                reason: 'draw',
+                correctWord: targetWord
+            });
+            
+            setTimeout( () => startNewRound(roomCode), 3000);
+        } else {
+            startTurnTimer(roomCode);
+        }
+
+        //start timer for next turn 
+        if(!isCorrect && room.currentRow < 6) {
+            startTurnTimer(roomCode);
+        }
 
     });
 
@@ -236,6 +280,111 @@ function handleDisconnect(socketId){
             }
         }
 }
+
+//timer to each turn
+
+function startTurnTimer(roomCode) {
+    const room = rooms[roomCode];
+    if(!room) return;
+
+
+    //clear any current timers
+    if(room.turnTimer){
+        clearTimeout(room.turnTimer);
+    }
+
+    // notify client timer has start
+    io.to(roomCode).emit('timerStart', {
+        duration: room.turnDuration / 1000
+    });
+
+    //set timeout
+    room.turnTimer = setTimeout ( () => {
+        handleTurnTimeout(roomCode);
+    }, room.turnDuration);
+}
+
+function handleTurnTimeout(roomCode){
+    const room = rooms[roomCode];
+    if(!room) return;
+
+    const currentPlayerIndex = room.currentTurn;
+    const currentPlayerName = room.players[currentPlayerIndex].name;
+
+    console.log(`${currentPlayerName} ran out of time in room ${roomCode}`);
+
+    //skip turn
+    room.currentTurn = (room.currentTurn + 1) % 2;
+    room.currentRow++;
+
+    //notify the client
+    io.to(roomCode).emit('turnSkipped', {
+        playerName: currentPlayerName,
+        row: room.currentRow - 1,
+        currentTurn: room.currentTurn
+    });
+
+    //check if game over
+    if(room.currentRow >= 6) {
+        io.to(roomCode).emit('roundEnded', {
+            winner: null,
+            scores: room.scores,
+            reason: 'draw',
+            correctWord: room.targetWord
+        });
+        setTimeout( () => startNewRound(roomCode), 3000);
+    } else {
+        startTurnTimer(roomCode); //Start timer for next turn
+    }
+}
+
+//start new round 
+function startNewRound(roomCode) {
+    const room = rooms[roomCode];
+    if(!room) return;
+
+    room.currentRound++;
+
+    //match over if current round is greater than 5
+    if(room.currentRound > room.maxRounds) {
+        let winner = null;
+        if(room.scores[0] > room.scores[1]){
+            winner = 0;
+        } else if(room.scores[0] < room.scores[1]) {
+            winner = 1;
+        } 
+
+        //else means nobody won draw 
+        io.to(roomCode).emit('matchEnded', {
+            winner: winner !== null ? room.players[winner].name : null,
+            scores: room.scores,
+            reason: winner !== null? 'bestOf5Complete' : 'trueDraw'
+        });
+        delete rooms[roomCode];
+        return;
+    }
+
+    //if there still more rounds, resets round
+    room.targetWord = getRandomWord('medium');
+    room.currentTurn = Math.floor(Math.random() * 2);
+    room.currentRow = 0;
+
+    if(room.turnTimer){
+        clearTimeout(room.turnTimer);
+        room.turnTimer = null;
+    }
+
+    io.to(roomCode).emit('newRoundStarting', {
+        round: room.currentRound,
+        maxRounds: room.maxRounds,
+        scores: room.scores,
+        targetWord: room.targetWord,
+        currentTurn: room.currentTurn
+    });
+
+    startTurnTimer(roomCode);
+}
+
 
 server.listen(3000, () => {
     console.log('Server running on https://localhost:3000')

@@ -121,11 +121,37 @@ function showScreen(screenId){
 
 document.addEventListener('DOMContentLoaded', ()=> {
     
-    //showScreen('multiplayerGameScreen');
+    /* showScreen('multiplayerGameScreen'); */
+
+    
 
     //check if URL has room code
     const urlParams = new URLSearchParams(window.location.search);
     const roomCodeFromURL = urlParams.get('room');
+
+    const testScreen = urlParams.get('screen');
+    // Development mode - auto-initialize game components
+    if(testScreen === 'multiplayerGameScreen') {
+        showScreen(testScreen);
+        
+        // Auto-initialize the game grid and keyboard for testing
+        setTimeout(() => {
+            const mockGameData = {
+                targetWord: 'APPLE', // Test word
+                currentTurn: 0
+            };
+            const mockPlayerIndex = 0; // You're player 1
+            
+            initializeMultiplayerGame(mockGameData, mockPlayerIndex);
+        }, 100);
+        return;
+    }
+    
+    // Normal flow
+    if(testScreen && document.getElementById(testScreen)) {
+        showScreen(testScreen);
+        return;
+    }
 
     //homepage
     const competitiveBtn = document.getElementById('competiveMode');
@@ -135,8 +161,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const startGameBtn = document.getElementById('startGameBtn');
     const leaveRoomBtn = document.getElementById('leaveRoomBtn');
 
+    const playerNameInput = document.getElementById('playerNameInput');
     const createBtn = document.getElementById('createRoomConfirm');
-
     const backHomeBtn = document.getElementById('backToHomeFromRoom');
 
     //leave button for everyone before any returns
@@ -160,6 +186,23 @@ document.addEventListener('DOMContentLoaded', ()=> {
     if(backHomeBtn){
         backHomeBtn.addEventListener('click', ()=> {
             window.location.href = window.location.origin + window.location.pathname;
+        });
+    }
+
+    if(playerNameInput){
+        playerNameInput.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter'){
+                event.preventDefault();
+                
+                if(document.activeElement === backHomeBtn){
+                    return;
+                }
+
+                if(createBtn){
+                    createBtn.click();
+                }
+                i
+            }
         });
     }
 
@@ -206,10 +249,6 @@ document.addEventListener('DOMContentLoaded', ()=> {
             socket.emit('createRoom', { playerName });
         });
     }
-
-
-
-
 
 
 });
