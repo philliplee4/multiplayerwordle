@@ -28,6 +28,8 @@ let currentTurnIndex = 0;
 let turnTimer = null;
 let timeRemaining = 30;
 
+let isSubmitting = false;
+
 /* Start multiplayer game*/
 
 export function initializeMultiplayerGame(gameData, playerIndex){
@@ -50,6 +52,7 @@ export function initializeMultiplayerGame(gameData, playerIndex){
 
     //generate new word each round 
     gameActive = true;
+    isSubmitting = false;
     updateTurnIndicator();
 
     console.log("Successfully initialized");
@@ -126,45 +129,35 @@ function handleBackspace(){
 }
 
 async function handleEnter(){
+
+    if(isSubmitting) {
+        console.log("Already sumitting, ignoring duplicate enters");
+        return;
+    }
     if(currentGuess.length !== 5){
         showInvalidWordPopup("Word must be 5 letters long");
         shakeCurrentRow(currentRow, squares);
         return;
     }
 
+    isSubmitting = true;
+
     socket.emit('submitGuess', {
         guess: currentGuess,
         row: currentRow
     });
 
-    /* //check word if valid and correct 
-    const result = await validGuess(currentGuess, targetWord, currentRow, squares);
+    setTimeout( () => {
+        isSubmitting = false;
+    }, 1000);
 
-    //check if word is valid
-    if(!result.valid){
-        showInvalidWordPopup("Not a valid word");
-        shakeCurrentRow(currentRow, squares);
-        return;
-    }
-
-    //check if word is correct guess
-    if(result.isCorrect){
-        console.log(`Player ${currentPlayer} wins!`);
-    } else if (currentRow >= 5){
-        console.log("End of round!")
-        cleanupGame();
-        //round ends
-    } else {
-        currentRow++;
-        currentGuess="";
-        //switch turns switchPlayer();
-    } */
 }
 
 function cleanupGame(){
     document.removeEventListener('keydown', handlePhysicalKeyboard);
     if(turnTimer) clearInterval(turnTimer);
     gameActive = false;
+    isSubmitting = false;
 }
 
 function updateTurnIndicator(){
@@ -226,7 +219,9 @@ function updateTurnIndicator(){
 
 
 socket.on('guessResult', (data) => {
-    
+
+    isSubmitting = false;
+
     //display guess on grid
     displayCurrentGuess(data.guess, data.row, squares);
 
@@ -254,6 +249,7 @@ socket.on('guessResult', (data) => {
 })
 
 socket.on('invalidWord', (data) => {
+    isSubmitting = false;
     showInvalidWordPopup(data.message);
     shakeCurrentRow(currentRow, squares);
 })
@@ -267,6 +263,7 @@ socket.on('timerStart', (data) => {
 //turn skipped
 socket.on('turnSkipped', (data) => {
     console.log(`${data.playerName}'s turn was skipped - time expired`);
+    isSubmitting = false;
 
     //mark the skipped row as grayed out
     for(let i = 0; i<5; i++){
@@ -314,6 +311,7 @@ function updateTimerDisplay() {
 
 socket.on('newRoundStarting', (data) => {
     console.log(`Starting round ${data.round}/${data.maxRounds}`);
+    isSubmitting = false;
 
     const roundInfo = document.querySelector('.round-info');
     if(roundInfo){
@@ -340,6 +338,8 @@ socket.on('newRoundStarting', (data) => {
 
 socket.on('roundEnded', (data) => {
     gameActive = false;
+    isSubmitting = false;
+
     if(turnTimer) clearInterval(turnTimer);
 
     if(data.winner) {

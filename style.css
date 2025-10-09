@@ -1,38 +1,18 @@
-/* Homepage */
-*{
+/* =============================================================================
+   GLOBAL STYLES & RESET
+   ============================================================================= */
+
+   *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+   }
 
-body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Arial', sans-serif;
-}
-
-#homescreen{
-    text-align: center;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 40px;
-}
-
-#title{
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
-    font-weight: bold;
-}
-
-.btns {
-/*     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center; */
+ body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
 }
 
 button{
@@ -43,180 +23,115 @@ button{
     background: white;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: bold;
+    font-weight: 600;
     min-width: 200px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-
+/*     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2); */
+    font-family: inherit;
 }
 
-button:hover{
+/* button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+} */
+
+button:active {
+    transform: translateY(0);
+}
+
+.screen-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* =============================================================================
+   HOMEPAGE STYLES
+   ============================================================================= */
+
+#homescreen {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+}
+
+#title {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
+    font-weight: bold;
+}
+
+.btns {
+    /* display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center; */
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border: block;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    min-width: 200px;
+/*     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); */
+}
+
+/* button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     background: linear-gradient(45deg, white, white);
 }
 
-button:active{ 
+button:active { 
     transform: translateY(0);
-}
-
+} */
 
 @media (max-width: 600px) {
-            #homescreen {
-                margin: 20px;
-                padding: 30px;
-            }
-            
-            #title {
-                font-size: 2rem;
-            }
-            
-            button {
-                min-width: 180px;
-            }
-        }
-
-/* Keyboard and Grid setup */
-
-/* Guess Grid */
-
-#gameScreen{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#mp-Grid{
-    display:grid;
-    grid-template-columns:repeat(5, 1fr);
-    grid-gap:5px;
-    max-width: 300px;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-.square {
-      width: 50px; /* Example square size */
-      height: 50px; /* Example square size */
-      border: 2px solid #d3d6da;
-      background-color: white;
-      display:flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: bold;
-      text-transform: uppercase;
-}
-
-.key {
-    width: 40px;
-    height: 50px;
-    background-color: lightgrey;
-    border-radius: 5px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    margin: 0 0.5px;
-    font-family: "Franklin Gothic";
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.wideKey{
-    width: 80px;
-    height: 50px;
-    background-color: lightgrey;
-    border-radius: 5px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    margin: 0 0.5px;
-}
-
-
-.keyboard{
-    display: flex;
-    flex-direction: column;
-    gap: 0px;
-}
-
-#kb1 {
-    display: grid;
-    grid-template-columns:repeat(10, 1fr);
-    gap: 5px;
-    max-width: 300px;
-    padding: 20px;
-    margin: auto;
-    justify-content: center;
-
+    #homescreen {
+        margin: 20px;
+        padding: 30px;
+    }
     
+    #title {
+        font-size: 2rem;
+    }
     
+    button {
+        min-width: 180px;
+    }
 }
 
-#kb2 {
-    display: grid;
-    grid-template-columns:repeat(9, 1fr);
-    gap: 5px;
-    max-width: 300px;
-    padding: 20px;
-    margin: auto;
-    justify-content: center;
-    
-}
+/* =============================================================================
+   ROOM SETUP STYLES (Original styling preserved)
+   ============================================================================= */
 
-#kb3 {
-    display: grid;
-    grid-template-columns:repeat(9, 1fr);
-    gap: 5px;
-    max-width: 300px;
-    padding: 20px;
-    margin: auto;
-    justify-content: center;
-    
-}
-
-#kb1, #kb2, #kb3{
-    padding: 3px;
-}
-
-/* colored squares and keyboard*/
-
-.correct {
-    background-color: #6ca965 !important;
-    color: white !important;
-}
-
-.present {
-    background-color: #c8b653 !important;
-    color: white !important;
-}
-
-.absent {
-    background-color: #787c7f !important;
-    color: white !important;
-}
-
-
-
-/* Room setup for multiplayer*/
 #roomSetupScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-#roomSetupScreen h1{
+#roomSetupScreen h1 {
     font-size: 2rem;
     margin-bottom: 30px;
     text-align: center;
 }
 
-.room-setup{
+.room-setup {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -226,7 +141,7 @@ button:active{
     margin-bottom: 30px;
 }
 
-/* input fields */
+/* Input fields */
 #playerNameInput, 
 #roomCodeInput {
     padding: 15px;
@@ -240,24 +155,24 @@ button:active{
 }
 
 #playerNameInput:focus,
-#roomCodeInput:focus{
+#roomCodeInput:focus {
     outline: none;
     border-color: #007bff;
 }
 
-#playerNameInput::playerholder,
-#roomCodeInput::placeholder{
+#playerNameInput::placeholder,
+#roomCodeInput::placeholder {
     color: #888;
 }
 
-.room-buttons{
+.room-buttons {
     display: flex;
-    gap:15px;
-    width:100%;
+    gap: 15px;
+    width: 100%;
 }
 
-#createRoomCode,
-#joinRoomCode{
+#createRoomConfirm,
+#joinRoomConfirm {
     flex: 1;
     padding: 15px 20px;
     font-size: 1.1rem;
@@ -269,39 +184,42 @@ button:active{
 }
 
 #createRoomConfirm {
-  background-color: #28a745;
+    background-color: #28a745;
+    color: white;
 }
 
 #createRoomConfirm:hover {
-  background-color: #218838;
-  transform: translateY(-1px);
+    background-color: #218838;
+    transform: translateY(-1px);
 }
 
 #joinRoomConfirm {
-  background-color: #007bff;
+    background-color: #007bff;
+    color: white;
 }
 
 #joinRoomConfirm:hover {
-  background-color: #0056b3;
-  transform: translateY(-1px);
+    background-color: #0056b3;
+    transform: translateY(-1px);
 }
 
 #backToMultFromRoom {
     padding: 12px 25px;
     font-size: 1rem;
     background-color: #6c757d;
-    border: none;
+    color: white;
+    border: block;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
-#backToMultiFromRoom:hover{
+#backToMultFromRoom:hover {
     background-color: #888d93;
     transform: translateY(-1px);
 }
 
-.room-actions{
+.room-actions {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -309,7 +227,7 @@ button:active{
 }
 
 @media (max-width: 480px) {
-    .room-setup{
+    .room-setup {
         max-width: 300px;
     }
 
@@ -318,38 +236,44 @@ button:active{
     }
 
     #createRoomConfirm,
-    #joinRoomConfirm{
+    #joinRoomConfirm {
         flex: none;
     }
+}   
+
+/* =============================================================================
+   WAITING ROOM STYLES (Original styling preserved)
+   ============================================================================= */
+
+#waitingRoomScreen {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-
-/* Waiting Room */
-#waitingRoomScreen{
-    width: 90vm;
+#waitingRoomScreen .screen-container {
+    width: 90vw;
     max-width: 700px;
-    padding: 1.5rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
-    border: 1px, solid #e5e7eb;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.waitingRoom-header{
+.waiting-room-header {
     text-align: center;
 }
 
-#waitingRoomScreen h1{
+#waitingRoomScreen h1 {
     font-size: 2rem;
-    font-weight:700;
-    color:#1f2937;
+    font-weight: 700;
+    color: #1f2937;
     margin-bottom: 1rem;
     letter-spacing: -0.025em;
 }
 
-.room-info-header{
+.room-info-header {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -360,13 +284,13 @@ button:active{
     border: 2px solid #e5e7eb;
 }
 
-.room-code{
+.room-code {
     font-size: 1.1rem;
     color: #6b7280;
 }
 
-#currentRoomCode{
-    font-family: 'Courier New', moonspace;
+#currentRoomCode {
+    font-family: 'Courier New', monospace;
     font-weight: 700;
     color: #1f2937;
     font-size: 1.25rem;
@@ -374,26 +298,189 @@ button:active{
     margin-left: 0.5rem;
 }
 
-.player-count{
+.player-count {
     font-size: 1.1rem;
     color: #6b7280;
     font-weight: 600;
 }
 
-
-.player-count span{
+.player-count span {
     color: #1f2937;
     font-weight: 700;
 }
 
+/* Player Cards in Waiting Room */
+.players-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.players-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+}
 
+.player-card {
+    background: #f9fafb;
+    border: 3px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
 
-/* Multiplayer game screen */
+.player-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.player-card.filled {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.player-label {
+    font-size: 1rem;
+    color: #6b7280;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.player-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.player-card.empty .player-name {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.player-avatar {
+    width: 50px;
+    height: 50px;
+    background: #e5e7eb;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    border: 2px solid #d1d5db;
+}
+
+.player-card.filled .player-avatar {
+    background: #dbeafe;
+    border-color: #3b82f6;
+}
+
+.player-card.empty .player-avatar {
+    background: #f3f4f6;
+}
+
+.player-status {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-top: auto;
+}
+
+.status-ready {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.status-joining {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fed7aa;
+}
+
+.status-waiting {
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+}
+
+/* Waiting Room Buttons */
+.room-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.room-buttons button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    min-width: 120px;
+}
+
+#startGameBtn {
+    background: #3b82f6;
+    color: white;
+}
+
+#startGameBtn:hover {
+    background: #2563eb;
+}
+
+#startGameBtn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#editRoomBtn {
+    background: #f59e0b;
+    color: white;
+}
+
+#editRoomBtn:hover {
+    background: #d97706;
+}
+
+#leaveRoomBtn {
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 2px solid ;
+}
+
+#leaveRoomBtn:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+/* =============================================================================
+   MULTIPLAYER GAME STYLES
+   ============================================================================= */
+
+#multiplayerGameScreen {
+    min-height: 100vh;
+    padding: 10px;
+}   
+
+#multiplayerGameScreen h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
 
 .game-container{
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -403,187 +490,483 @@ button:active{
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba( 0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.round-info {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.match-score{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2d3748;
 }
 
 .main-game{
-    display: flex;
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
     gap: 20px;
-    align-items: flex-start;
+    align-items: start;
 }
 
-/* player-sidebar */
+
+/* player sidebar */
 .player-sidebar{
-    flex: 0 0 200px;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
     padding: 20px;
-    backdrop-filter:blur(10px);
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* maybe remove blur later */
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
 }
 
-.player-info {
+.player-sidebar.active{
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    border: 2px solid #3b82f6;
+}
+
+.player-sidebar.player2{
+    opacity: 0.8;
+}
+
+.player-info{
     text-align: center;
     margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
 }
 
-.player-avatar{
-    font-size: 2rem;
+.player-sidebar .player-avatar{
+    font-size: 2.5rem;
     margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: auto;
+    height: auto;
+    background: none;
+    border: none;
 }
 
-.player-name{
-    font-weight:bold;
-    font-size: 1.1rem;
+.player-sidebar .player-name{
+    font-weight: 600;
+    font-size: 1rem;
+    color: #2d3748;
+    margin-bottom:0;
 }
 
-.player-stats{
-    margin: 20px;
+.player-stats {
+    margin: 20px 0;
 }
 
-.stats{
+.stat{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 5px 0;
-}
-
-.stat-value.gold{
-    color: #FFD700;
-}
-
-.stat-value.timer{
-    color: #FF6868;
-}
-
-/* Centeral Board */
-.central-board{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    min-width: 400px;
-}
-
-.board-header{
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.turn-indicator{
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.word-info{
-    color: #666;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
     font-size: 0.9rem;
 }
 
-.keyboard-area{
-    margin-top: 20px;
-    width: 100%;
-    max-width: 400px;
+.stat-value.gold {
+    color: #f59e0b;
+    font-weight: 600;
 }
 
-.guess-area{
-    margin-bottom: 20px;
+.stat-value.timer {
+    color: #ef4444;
+    font-weight: 600;
 }
 
-.powerups-section{
+.powerups-section {
     margin-top: 20px;
 }
 
 .powerups-title{
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: 600;
+    margin-bottom: 15px;
     text-align: center;
+    color: #4a5568;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.powerups{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .powerup {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
     border-radius: 8px;
-    padding: 10px;
+    padding: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
 }
 
-.powerup-name{
-    background: rgba(255, 255, 255, 0.1);
+.powerup:hover{
+    background: rgba(59, 130, 246, 0.15);
+    transform: translateY(-1px);
 }
 
 .powerup-cost{
     font-size: 0.8rem;
-    color: #FFD700;
-    font-weight: bold;
+    color: #f59e0b;
+    font-weight: 600;
 }
 
-/* opponent information */
 .opponent-powerup-info{
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-
-.powerup-mystery {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    padding: 8px;
-    font-size: 0.85rem;
+.powerup-mystery{
+    background: rgba(0,0,0,0.1);
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 0.8rem;
     text-align: center;
+    color: #6b7280;
 }
 
-.waiting-message {
-    margin-top: 20px;
+.waiting-message{
+    margin-top: 15px;
     text-align: center;
     font-style: italic;
-    color: #888;
-    font-size: 0.9rem;
+    color: #9ca3af;
+    font-size: 0.85rem;
+    padding: 10px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 8px;
 }
 
-.shake {
-    animation: shake 0.6s ease-in-out;
+/* Center board */
+
+.central-board{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
-/* Popup styling */
+.board-header{
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.turn-indicator{
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1e40af;
+    margin-bottom: 8px;
+}
+
+.word-info{
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
 .incorrectpopup-container {
     position: fixed;
-    top: 20px;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
-    background: #ff4444;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 10px;
-    z-index: 1000;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
+    z-index: 2000;
     opacity: 0;
-    transition: opacity 0.3s ease;
-    font-weight: bold;
+    visibility: hidden;
+    transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+    pointer-events: none;
 }
 
 .incorrectpopup-container.show {
     opacity: 1;
+    visibility: visible;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* =============================================================================
+   WORDLE GRID & KEYBOARD STYLES
+   ============================================================================= */
+
+.guess-area {
+    margin-bottom: 30px;
+}
+
+.guessGrid{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+
+.guessRow{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+}
+
+.letter-box, .square {
+    width: 62px;
+    height: 62px;
+    border: 2px solid #d3d6da;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.letter-box.filled,
+.square.filled{
+    border-color: #878a8c;
+    animation: pop 0.1s ease-in-out;
+}
+
+/* Color status */
+
+.correct {
+    background-color: #6aaa64 !important;
+    border-color: #6aaa64 !important;
+    color: white !important;
+}
+
+.present {
+    background-color: #c9b458 !important;
+    border-color: #c9b458 !important;
+    color: white !important;
+}
+
+.absent {
+    background-color: #787c7e !important;
+    border-color: #787c7e !important;
+    color: white !important;
+}
+
+@keyframes pop{
+    from{ transform: scale(0.8); }
+    40%{ transform: scale(1.1); }
+    to{ transform: scale(1); }
+}
+
+.keyboard-area{
+    width: 100%;
+    max-width: 500px;
+}
+
+.keyboardRow{
+    display: flex;
+    justify-content: center;
+    margin: 3px 0;
+    gap: 6px;
+}
+
+.key-button,
+.key,
+.wideKey{
+    height: 58px;
+    border-radius: 4px;
+    border: none;
+    background: #d3d6da;
+    color: #1a1a1b;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    transition: all 0.1s ease;
+    font-size: 0.9rem;
+}
+
+.key-button.wide-key,
+.wideKey{
+    /* flex: 1.5;
+    font-size: 0.75rem;
+    width: 50px; */
+    font-size: 0.75rem;
+    padding: 0 80px;
+    min-width: 80px;
+}
+
+.key-button.letter-key,
+.key {
+    flex: 1;
+    min-width: 43px;
+    width: 40px;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+@media (max-width: 1200px) {
     .main-game {
-        flex-direction: column;
+        grid-template-columns: 220px 1fr 220px;
+        gap: 15px;
     }
     
     .player-sidebar {
-        flex: none;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 900px) {
+    .main-game {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .player-sidebar {
         width: 100%;
-        margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .player-info {
+        grid-column: span 2;
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .letter-box,
+    .square {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .room-buttons {
+        flex-direction: column;
+    }
+    
+    .players-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .player-card {
+        min-height: 160px;
+        padding: 1.25rem;
+    }
+    
+    .room-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .room-buttons button {
+        min-width: unset;
+    }
+}
+
+@media (max-width: 600px) {
+    .screen-container {
+        margin: 20px;
+        padding: 30px;
+    }
+    
+    #title {
+        font-size: 2rem;
+    }
+    
+    button {
+        min-width: 180px;
     }
     
     .game-container {
         padding: 10px;
     }
+    
+    .header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .letter-box,
+    .square {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
+    .key-button,
+    .key,
+    .wideKey {
+        height: 50px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .room-setup {
+        max-width: 300px;
+    }
+
+    .room-buttons {
+        flex-direction: column;
+    }
+
+    #createRoomConfirm,
+    #joinRoomConfirm {
+        flex: none;
+    }
+    
+    .room-info-header {
+        padding: 0.75rem;
+    }
+
+    .player-card {
+        padding: 1rem;
+        min-height: 140px;
+    }
+
+    .player-avatar {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
 }
