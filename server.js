@@ -26,10 +26,26 @@ const io = new Server(server, {
 });
 
 //get random word from json file
-function getRandomWord(difficulty = 'medium') {
+function getRandomWord(currentRound){
+    let difficulty;
+
+    if(currentRound <= 0){
+        difficulty = 'easy';
+    } else if(currentRound <= 2) {
+        difficulty = 'easy';
+    } else if(currentRound <= 4) {
+        difficulty = 'medium';
+    } else {
+        difficulty = 'hard';
+    }
+
     const words = wordList[difficulty];
+    console.log(`Round ${currentRound}: Using ${difficulty} difficulty word`);
+    console.log(`Starting new round in room ${roomCode} with word: ${room.targetWord}`);
     return words[Math.floor(Math.random() * words.length)];
 }
+
+
 
 //stores active rooms
 const rooms = {}; 
@@ -108,7 +124,7 @@ io.on('connection', (socket) => {
             }
 
 
-            room.targetWord = getRandomWord('medium');
+            room.targetWord = getRandomWord(room.currentRound);
             room.currentTurn = Math.floor(Math.random() * 2);
             room.currentRow = 0;
             room.turnTimer = null;       
@@ -373,7 +389,9 @@ function startNewRound(roomCode) {
     }
 
     //if there still more rounds, resets round
-    room.targetWord = getRandomWord('medium');
+    room.targetWord = getRandomWord(room.currentRound);
+    console.log(`Starting new round in room ${roomCode} with word: ${room.targetWord}`);
+
     room.currentTurn = Math.floor(Math.random() * 2);
     room.currentRow = 0;
 
