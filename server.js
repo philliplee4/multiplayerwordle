@@ -41,7 +41,6 @@ function getRandomWord(currentRound){
 
     const words = wordList[difficulty];
     console.log(`Round ${currentRound}: Using ${difficulty} difficulty word`);
-    console.log(`Starting new round in room ${roomCode} with word: ${room.targetWord}`);
     return words[Math.floor(Math.random() * words.length)];
 }
 
@@ -412,6 +411,7 @@ function startNewRound(roomCode) {
 }
 
 
-server.listen(3000, () => {
-    console.log('Server running on https://localhost:3000')
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`)
 });
