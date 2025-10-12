@@ -132,6 +132,8 @@ io.on('connection', (socket) => {
             startNewRound(roomCode);
 
             console.log(`Starting game in room ${roomCode} with word: ${room.targetWord}`);
+            console.log(`🎯 ROUND 1 TARGET WORD: ${room.targetWord}`); // ADD THIS LINE
+
 
             //send player names to multiplayer server
             io.to(roomCode).emit('gameStarted', {
