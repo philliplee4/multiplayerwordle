@@ -309,7 +309,7 @@ io.on('connection', (socket) => {
             room.scores = [0, 0];
             room.currentRound = 0;
             room.rematchRequests = [];
-
+            room.gameEnded = false;
             room.targetWord = getRandomWord(room.currentRound);
             room.currentTurn = Math.floor(Math.random() * 2);
             room.currentRow = 0;
@@ -336,6 +336,9 @@ function handleDisconnect(socketId){
 
             if(playerIndex != -1){
                 const disconnectedPlayer = room.players[playerIndex];
+
+                console.log(`${disconnectedPlayer.name} disconnected from room ${code}`);
+
 
                 //check if game was active(currentTurn exist = game started)
                 const gameWasActive = room.currentTurn != undefined;
@@ -440,6 +443,8 @@ function startNewRound(roomCode) {
             winner = 1;
         } 
 
+        room.gameEnded = true;
+
         //else means nobody won draw 
         io.to(roomCode).emit('matchEnded', {
             winner: winner !== null ? room.players[winner].name : null,
@@ -449,7 +454,6 @@ function startNewRound(roomCode) {
             // profilePic: winner !== null ? room.players[winner].profilePic : null // For future
 
         });
-        delete rooms[roomCode];
         return;
     }
 
