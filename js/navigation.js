@@ -125,7 +125,8 @@ function showScreen(screenId){
         'multiplayerGameScreen',
         'itemShopScreen',
         'gameFinishScreen',
-        'initializeMultiplayerGame'
+        'initializeMultiplayerGame',
+        'matchEndScreen'
     ]
 
     screens.forEach(id => {
@@ -137,11 +138,49 @@ function showScreen(screenId){
 
     const targetElement = document.getElementById(screenId);
     if(targetElement) {
-        targetElement.style.display = 'block';
+        targetElement.style.display = screenId === 'matchEndScreen' ? 'flex' : 'block';
     } else {
         console.error(`Screen with id '${screenId}' not found`) ;
     }
     }
+
+document.addEventListener('click', (event) => {
+    if(event.target && event.target.id === 'rematchBtn'){
+        const rematchBtn = event.target;
+
+        if(rematchBtn.disabled) {
+            console.log('Button already disabled');
+            return;
+        }
+
+        console.log('Rematch button clicked!');
+
+        rematchBtn.disabled = true;
+        rematchBtn.textContent = 'Waiting for opponent...';
+        rematchBtn.style.background = '#9ca3af';
+        rematchBtn.style.cursor = 'not-allowed';
+        rematchBtn.style.animation = 'none';
+
+        socket.emit('requestRematch');
+
+        const matchEndMessage = document.getElementById('matchEndMessage');
+        if(matchEndMessage){
+            matchEndMessage.textContent = 'Waiting for opponent to accept rematch...';
+            matchEndMessage.style.color = '#6b7280';
+            matchEndMessage.style.fontSize = '1.3rem';
+        }
+    }
+
+    if(event.target && event.target.id === 'backToHomeBtn'){
+        console.log('Back to home clicked!');
+        socket.emit('leaveRoom');
+        document.getElementById('matchEndScreen').style.display = 'none';
+        location.reload();
+    }
+
+
+})
+
 
 document.addEventListener('DOMContentLoaded', ()=> {
     
@@ -190,8 +229,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const backHomeBtn = document.getElementById('backToHomeFromRoom');
 
     //match end screen buttons
-    const rematchBtn = document.getElementById('rematchBtn');
-    const backToHomeBtn = document.getElementById('backToHomeBtn');
+/*     const rematchBtn = document.getElementById('rematchBtn');
+    const backToHomeBtn = document.getElementById('backToHomeBtn'); */
 
     //leave button for everyone before any returns
     if(leaveRoomBtn){
@@ -279,7 +318,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     }
 
     //match end screen
-    if(rematchBtn){
+/*     if(rematchBtn){
         rematchBtn.addEventListener('click', ()=> {
             console.log('Rematch requested');
 
@@ -307,7 +346,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
             document.getElementById('matchEndScreen').style.display = 'none';
             location.reload();
         });
-    }
+    } */
 
 
 });
