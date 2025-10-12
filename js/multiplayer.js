@@ -358,7 +358,7 @@ socket.on('matchEnded', (data) => {
     gameActive = false;
     if(turnTimer) clearInterval(turnTimer);
 
-    //let message = '';
+
     let winnerData = null;
 
     if(data.winner){
@@ -374,14 +374,14 @@ socket.on('matchEnded', (data) => {
             // profilePic: data.profilePic // For future use
         };
         //message = `Match Over! ${data.winner} wins ${data.scores[0]}-${data.scores[1]}!`
-    } else {
+    } /* else {
         //message = `Match ended in a draw ${data.scores[0]}-${data.scores[1]}!`;
-    }
+    } */
 
-    showMatchEndScreen(message, data.scores, winnerData);
+    showMatchEndScreen(' ', data.scores, winnerData);
 })
 
-function showMatchEndScreen(message, scores) {
+function showMatchEndScreen(message, scores, winnerData) {
 
     document.getElementById('multiplayerGameScreen').style.display = 'none';
 
