@@ -93,12 +93,27 @@ socket.on('gameEnded', (data) => {
     window.location.href = window.location.origin + window.location.pathname;
 })
 
-socket.on('rematchRequest', (data) => {
-    const rematchStatus = document.querySelector('.rematch-status');
-    if(rematchStatus) {
-        rematchStatus.textContent = `${data.playerName} wants to rematch! Click Rematch to accept.`;
-        rematchStatus.style.background = '#dcfce7';
-        rematchStatus.style.color = '#166534'
+socket.on('rematchRequested', (data) => {
+    
+    console.log(`${data.playerName} wants to rematch!`);
+
+    const matchEndMessage = document.getElementById('matchEndMessage');
+    if(matchEndMessage){
+        matchEndMessage.textContent = `${data.playerName} wants a rematch! Click Rematch to accept.`;
+        matchEndMessage.style.color = '#059669';
+        matchEndMessage.style.fontWeight = '700';
+        matchEndMessage.style.fontSize = '1.5rem';
+    }
+    
+    const rematchBtn = document.getElementById('rematchBtn');
+    if(rematchBtn) {
+    
+        rematchBtn.disabled = false;
+        rematchBtn.textContent = 'Accept Rematch';
+        rematchBtn.style.background = '#10b981';
+        rematchBtn.style.cursor = 'pointer';
+        rematchBtn.style.animation = 'pulse 1s infinite';
+        rematchBtn.style.boxShadow = '0 0 20px rgba(16, 185, 129, 0.5)';
     }
 })
 
@@ -267,21 +282,22 @@ document.addEventListener('DOMContentLoaded', ()=> {
     if(rematchBtn){
         rematchBtn.addEventListener('click', ()=> {
             console.log('Rematch requested');
+
+            rematchBtn.disabled = true;
+            rematchBtn.textContent = 'Waiting for opponent...';
+            rematchBtn.style.background = '#9ca3af';
+            rematchBtn.style.cursor = 'not-allowed';
+            rematchBtn.style.animation = 'none';
+
             socket.emit('requestRematch');
 
-            document.getElementById('matchEndScreen').style.display = 'none';
-
-            showScreen('waitingRoomScreen');
-
-            const rematchStatus = document.createElement('div');
-            rematchStatus.className = 'rematch-status';
-            rematchStatus.textContent = 'Waiting for opponent to accept rematch...';
-            rematchStatus.style.cssText = 'text-align: center; padding: 15px; background: #fef3c7; border-radius: 10px; margin: 10px 0; color: #92400e; font-weight: 600;';
-
-            const waitingRoom = document.getElementById('waitingRoomScreen');
-            if(waitingRoom) {
-                waitingRoom.insertBefore(rematchStatus, waitingRoom.firstChild);
+            const matchEndMessage = document.getElementById('matchEndMessage');
+            if(matchEndMessage){
+                matchEndMessage.textContent = 'Waiting for opoonent to accept rematch...';
+                matchEndMessage.style.color = '#6b7280';
+                matchEndMessage.style.fontSize = '1.3rem';
             }
+
         });
     }
 
