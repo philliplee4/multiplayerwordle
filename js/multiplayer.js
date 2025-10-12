@@ -358,18 +358,92 @@ socket.on('matchEnded', (data) => {
     gameActive = false;
     if(turnTimer) clearInterval(turnTimer);
 
-    let message = '';
+    //let message = '';
+    let winnerData = null;
+
     if(data.winner){
-        message = `Match Over! ${data.winner} wins ${data.scores[0]}-${data.scores[1]}!`
+ 
+        const isPlayer1Winner = data.winner === document.querySelector('.player-sidebar.active .player-name').textContent;
+        const winnerAvatar = isPlayer1Winner 
+            ? document.querySelector('.player-sidebar.active .player-avatar').textContent
+            : document.querySelector('.player-sidebar.player2 .player-avatar').textContent;
+        
+        winnerData = {
+            winner: data.winner,
+            avatar: winnerAvatar,
+            // profilePic: data.profilePic // For future use
+        };
+        //message = `Match Over! ${data.winner} wins ${data.scores[0]}-${data.scores[1]}!`
     } else {
-        message = `Match ended in a draw ${data.scores[0]}-${data.scores[1]}!`;
+        //message = `Match ended in a draw ${data.scores[0]}-${data.scores[1]}!`;
     }
 
-    showMatchEndScreen(message, data.scores);
+    showMatchEndScreen(message, data.scores, winnerData);
 })
 
 function showMatchEndScreen(message, scores) {
 
+    document.getElementById('multiplayerGameScreen').style.display = 'none';
+
+    const endScreen = document.getElementById('matchEndScreen');
+    const messageElement = document.getElementById('matchEndMessage');
+    const winnerDisplay = document.getElementById('winnerDisplay');
+    const winnerAvatar = document.getElementById('winnerAvatar');
+    const winnerName = document.getElementById('winnerName');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+ 
+    if(!endScreen || !messageElement) return;
+
+    if(scoreDisplay) {
+        scoreDisplay.textContent = `${scores[0]} - ${scores[1]}`;
+    }
+    
+    //handle winner display or draw
+    if(winnerData && winnerData.winner) {
+
+        winnerDisplay.style.display = 'flex';
+        winnerDisplay.classList.remove('draw');
+
+        if(winnerAvatar){
+             // For now, use trophy emoji. Later, replace with: 
+            // winnerAvatar.innerHTML = `<img src="${winnerData.profilePic}" alt="Winner">`;
+
+            winnerAvatar.textContent = winnerData.avatar || '🏆';
+        }
+
+        if(winnerName) {
+            winnerName.textContent = winnerData.winner;
+        }
+
+        messageElement.textContent = `Congratulations! ${winnerData.winner} wins the match!`;
+
+    } else { //draw
+        
+        winnerDisplay.style.display = 'flex';
+        winnerDisplay.classList.add('draw');
+
+        if (winnerAvatar) {
+            winnerAvatar.textContent = '🤝';
+        }
+        
+        if (winnerName) {
+            winnerName.textContent = 'Draw';
+        }
+        
+        const winnerLabel = document.querySelector('.winner-label');
+        if (winnerLabel) {
+            winnerLabel.textContent = "It's a Tie!";
+        }
+        
+        messageElement.textContent = 'Well played! The match ended in a draw.';
+    }
+
+    endScreen.style.display = 'flex';
+
+
+    /* 
+    
+    
     //hides multiplayer game screen
     document.getElementById('multiplayerGameScreen').style.display = 'none';
 
@@ -403,6 +477,7 @@ function showMatchEndScreen(message, scores) {
         endScreen.style.display = 'none';
         location.reload();
     });
+    */
 }
 
 

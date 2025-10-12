@@ -93,6 +93,15 @@ socket.on('gameEnded', (data) => {
     window.location.href = window.location.origin + window.location.pathname;
 })
 
+socket.on('rematchRequest', (data) => {
+    const rematchStatus = document.querySelector('.rematch-status');
+    if(rematchStatus) {
+        rematchStatus.textContent = `${data.playerName} wants to rematch! Click Rematch to accept.`;
+        rematchStatus.style.background = '#dcfce7';
+        rematchStatus.style.color = '#166534'
+    }
+})
+
 function showScreen(screenId){
     const screens = [
         'homescreen',
@@ -165,6 +174,10 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const createBtn = document.getElementById('createRoomConfirm');
     const backHomeBtn = document.getElementById('backToHomeFromRoom');
 
+    //match end screen buttons
+    const rematchBtn = document.getElementById('rematchBtn');
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+
     //leave button for everyone before any returns
     if(leaveRoomBtn){
         leaveRoomBtn.addEventListener('click', ()=> {
@@ -201,7 +214,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
                 if(createBtn){
                     createBtn.click();
                 }
-                i
+                
             }
         });
     }
@@ -247,6 +260,36 @@ document.addEventListener('DOMContentLoaded', ()=> {
             }
 
             socket.emit('createRoom', { playerName });
+        });
+    }
+
+    //match end screen
+    if(rematchBtn){
+        rematchBtn.addEventListener('click', ()=> {
+            console.log('Rematch requested');
+            socket.emit('requestRematch');
+
+            document.getElementById('matchEndScreen').style.display = 'none';
+
+            showScreen('waitingRoomScreen');
+
+            const rematchStatus = document.createElement('div');
+            rematchStatus.className = 'rematch-status';
+            rematchStatus.textContent = 'Waiting for opponent to accept rematch...';
+            rematchStatus.style.cssText = 'text-align: center; padding: 15px; background: #fef3c7; border-radius: 10px; margin: 10px 0; color: #92400e; font-weight: 600;';
+
+            const waitingRoom = document.getElementById('waitingRoomScreen');
+            if(waitingRoom) {
+                waitingRoom.insertBefore(rematchStatus, waitingRoom.firstChild);
+            }
+        });
+    }
+
+    if(backToHomeBtn) {
+        backToHomeBtn.addEventListener('click', ()=> {
+            socket.emit('leaveRoom');
+            document.getElementById('matchEndScreen').style.display = 'none';
+            location.reload();
         });
     }
 

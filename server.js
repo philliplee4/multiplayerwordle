@@ -264,6 +264,66 @@ io.on('connection', (socket) => {
         handleDisconnect(socket.id);
         
     });
+
+    socket.on('requestRematch', ()=> {
+        console.log('Rematch requested By:', socket.id);
+
+        let roomCode = null;
+        for(const code in rooms) {
+            const room = rooms[code];
+            if(room.players.find(p => p.id === socket.id)){
+                roomCode = code;
+                break;
+            }
+        }
+
+        if(!roomCode) {
+            socket.emit('error', { message: 'Room not found'});
+            return;
+        }
+
+        const room = rooms[roomCode];
+
+        //initalize rematch tracking if no exist
+        if(!room.rematchRequests){
+            room.rematchRequests = [];
+        }
+
+        //add player's rematch request
+        if(!room.rematchRequests.includes(socket.id)){
+            room.rematchRequests.push(socket.id);
+        }
+
+        //notify other player
+        socket.to(roomCode).emit('rematchRequest', {
+            playerName: room.players.find(p => p.id === socket.id).name
+        });
+
+        //if both players want rematch, start new game
+        if(room.rematchRequests.length === 2) {
+            console.log(`Both players agree to a rematch in room ${roomCode}`);
+
+            room.scores = [0, 0];
+            room.currentRound = 0;
+            room.rematchRequests = [];
+
+            room.targetWord = getRandomWord(room.currentRound);
+            room.currentTurn = Math.floor(Math.random() * 2);
+            room.currentRow = 0;
+
+            startNewRound(roomCode);
+
+            io.to(roomCode).emit('gameStarted', {
+                player1: room.players[0].name,
+                player2: room.players[1].name,
+                targetWord: room.targetWord,
+                currentTurn: room.currentTurn
+            });
+
+            startTurnTimer(roomCode);
+        }
+
+    })
 });
 
 function handleDisconnect(socketId){
@@ -380,8 +440,11 @@ function startNewRound(roomCode) {
         //else means nobody won draw 
         io.to(roomCode).emit('matchEnded', {
             winner: winner !== null ? room.players[winner].name : null,
+            winnerIndex: winner,
             scores: room.scores,
             reason: winner !== null? 'bestOf5Complete' : 'trueDraw'
+            // profilePic: winner !== null ? room.players[winner].profilePic : null // For future
+
         });
         delete rooms[roomCode];
         return;

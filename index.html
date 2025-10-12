@@ -188,11 +188,32 @@
 
     </div>
 
-    <div id = gameFinishScreen>
+    <!-- match end screen -->
+    <div id="matchEndScreen" style = "display:none;">
+        <div class="match-end-container">
+            <h1 class="match-end-title">Match Complete!</h1>
 
+            <div id="winnerDisplay" class="winner-display">
+                <div class="winner-avatar" id="winnerAvatar"> COOL! </div>
+                <div class="winner-name" id="winnerName"> Mc Griddy</div>
+                <div class="winner-label">Winner!</div>
+            </div>
 
+            <p class = "match-end-message" id="matchEndMessage"></p>
+
+            <div class="final-score" id="finalScore">
+                <div class="score-item">
+                    <span class="score-label">Final Score</span>
+                    <span class="score-value" id="scoreDisplay">0 - 0</span>
+                </div>
+            </div>
+
+            <div class="match-end-buttons">
+                <button id="rematchBtn" class="btn-primary">Rematch</button>
+                <button id="backToHomeBtn" class="btn-secondary">Main Menu</button>
+            </div>
+        </div>
     </div>
-
 
 
     <script type="module" src="js/gameLogic.js"></script>
