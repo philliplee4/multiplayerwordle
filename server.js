@@ -122,14 +122,15 @@ io.on('connection', (socket) => {
                 return;
             }
 
-
+            //initialize round 1
+            room.currentRound = 1;
             room.targetWord = getRandomWord(room.currentRound);
             room.currentTurn = Math.floor(Math.random() * 2);
             room.currentRow = 0;
             room.turnTimer = null;       
             room.turnDuration = 30000;   
 
-            startNewRound(roomCode);
+            /* startNewRound(roomCode); */
 
             console.log(`Starting game in room ${roomCode} with word: ${room.targetWord}`);
             console.log(`🎯 ROUND 1 TARGET WORD: ${room.targetWord}`); // ADD THIS LINE
