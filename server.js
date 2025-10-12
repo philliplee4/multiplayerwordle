@@ -453,6 +453,8 @@ function startNewRound(roomCode) {
     //if there still more rounds, resets round
     room.targetWord = getRandomWord(room.currentRound);
     console.log(`Starting new round in room ${roomCode} with word: ${room.targetWord}`);
+    console.log(`🎯 ROUND ${room.currentRound} TARGET WORD: ${room.targetWord}`);
+
 
     room.currentTurn = Math.floor(Math.random() * 2);
     room.currentRow = 0;
